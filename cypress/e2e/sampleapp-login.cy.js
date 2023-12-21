@@ -1,13 +1,38 @@
 describe('SampleApp Login Tests', () => {
-  it('Verify login page elements are all loaded', () => {
-    cy.visit('/login')
-    cy.get('h2').should("contain.text","Agile Travel")
-    cy.get('[id=username]').should("be.visible")
-    cy.get('[id=username]').parent().should("contain.html", "User Name: <i>agileway</i>")
-    cy.get('[id=password]').should("be.visible")
-    cy.get('[id=password]').parent().should("contain.html","Password: <i>testwise</i>")
-    cy.get('[id=remember_me]').should("be.visible")
-    cy.get('[id=remember_me]').parent().should("contain.html", "Remember me")
+  beforeEach(() => {
+    cy.visit('/')
+    cy.getDataTest("username").as("username")
+    cy.getDataTest("password").as("password")
+    cy.getDataTest("login-button").as("loginBtn")
 
+  })
+
+  it('Verify login page elements are all loaded', () => {
+    cy.get('[class=login_logo]').should("contain.text","Swag Labs")
+    cy.get("@username").should("be.visible").should("have.attr","placeholder", "Username")
+    cy.get("@password").should("be.visible").should("have.attr", "placeholder", "Password")
+    cy.get("@loginBtn").should("be.visible").should("have.value", "Login")
+
+    })
+
+    it('Verify user can login with valid username and password', () => {
+      cy.performLogin("standard_user", "secret_sauce")
+      cy.url().should("equal", "https://www.saucedemo.com/inventory.html")
+    })
+
+    it('Verify error message displayed to user that is locked out', () => {
+      cy.performLogin("locked_out_user", "secret_sauce")
+      cy.getDataTest("error").should("be.visible").should("contain", "locked out")
+    })
+
+    it('Verify username required message appears when logging in w/o a username', () => {
+      cy.get("@loginBtn").click()
+      cy.getDataTest("error").should("be.visible").should("contain.text", "Epic sadface: Username is required")
+    })
+
+    it('Verify password required message appears when logging in w/o a password', () => {
+      cy.get("@username").type("standard_user")
+      cy.get("@loginBtn").click()
+      cy.getDataTest("error").should("be.visible").should("contain.text", "Epic sadface: Password is required")
     })
 })
