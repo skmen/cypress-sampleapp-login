@@ -4,7 +4,7 @@
   "description": "",
   "main": "cypress.config.js",
   "scripts": {
-    "test": "start"
+    "cy.run": "cypress run"
   },
   "repository": {
     "type": "git",
