@@ -1,0 +1,19 @@
+{
+  "name": "cypress-sampleapp-login",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cypress.config.js",
+  "scripts": {
+    "test": "start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skmen/cypress-sampleapp-login.git"
+  },
+  "author": "kevin.mendoza",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skmen/cypress-sampleapp-login/issues"
+  },
+  "homepage": "https://github.com/skmen/cypress-sampleapp-login#readme"
+}

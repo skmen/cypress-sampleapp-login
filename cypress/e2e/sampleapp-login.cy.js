@@ -15,10 +15,12 @@ describe('SampleApp Login Tests', () => {
 
     })
 
-    it('Verify user can login with valid username and password', () => {
-      cy.performLogin("standard_user", "secret_sauce")
+    ;['standard_user','problem_user','error_user', 'performance_glitch_user','visual_user'].forEach((username) => {
+    it('Verify user can login with valid username, ' + username+ ', and password', () => {
+      cy.performLogin(username, "secret_sauce")
       cy.url().should("equal", "https://www.saucedemo.com/inventory.html")
     })
+  })
 
     it('Verify error message displayed to user that is locked out', () => {
       cy.performLogin("locked_out_user", "secret_sauce")
